@@ -8,6 +8,7 @@ exports.test = base.test.extend({
     executionMetadata: [async ({}, use, testInfo) => {
         const startedAt = new Date();
 
+
         const startMetadata = lifecycleService.createStartMetadata({
                 title: testInfo.title,
                 browser: testInfo.project.name,
@@ -15,23 +16,34 @@ exports.test = base.test.extend({
                 retry: testInfo.retry
             });
 
+        await testInfo.attach('execution-start-metadata',{
+            body: Buffer.from(JSON.stringify(startMetadata,null,2)),
+            contentType: 'application/json'
+            }
+        );
+
         await use(startMetadata);
 
         const endedAt = new Date();
 
         const endMetadata = lifecycleService.createEndMetadata({
-                title: testInfo.title,
-                browser: testInfo.project.name,
-                startedAt,
-                endedAt,
-                status: testInfo.status,
-                expectedStatus: testInfo.expectedStatus,
-                retry: testInfo.retry,
-                error: testInfo.error
-                    ? testInfo.error.message
-                    : null
+            title: testInfo.title,
+            browser: testInfo.project.name,
+            startedAt,
+            endedAt,
+            status: testInfo.status,
+            expectedStatus:
+                testInfo.expectedStatus,
+            retry: testInfo.retry,
+            error: testInfo.error
+                ? testInfo.error.message
+                : null
         });
 
+        await testInfo.attach('execution-end-metadata',{
+            body: Buffer.from(JSON.stringify(endMetadata,null,2)),
+            contentType: 'application/json'
+            });
         },
         {
             auto: true
@@ -49,7 +61,7 @@ exports.test = base.test.extend({
         await use(productPage);
 
     },
-    
+
     cartPage: async ({ page }, use) => {
 
         const cartPage = new CartPage(page);
