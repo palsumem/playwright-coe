@@ -2,12 +2,46 @@ const base = require('@playwright/test');
 const ProductPage = require('../pages/ProductPage');
 const CartPage = require('../pages/CartPage');
 const environment = require('../config/environment');
+const lifecycleService = require('../services/lifecycleServices');
 
 exports.test = base.test.extend({
+    executionMetadata: [async ({}, use, testInfo) => {
+        const startedAt = new Date();
 
-    productPage: async ({ page }, use) => {
+        const startMetadata = lifecycleService.createStartMetadata({
+                title: testInfo.title,
+                browser: testInfo.project.name,
+                startedAt,
+                retry: testInfo.retry
+            });
+
+        await use(startMetadata);
+
+        const endedAt = new Date();
+
+        const endMetadata = lifecycleService.createEndMetadata({
+                title: testInfo.title,
+                browser: testInfo.project.name,
+                startedAt,
+                endedAt,
+                status: testInfo.status,
+                expectedStatus: testInfo.expectedStatus,
+                retry: testInfo.retry,
+                error: testInfo.error
+                    ? testInfo.error.message
+                    : null
+        });
+
+        },
+        {
+            auto: true
+        }
+    ],
+
+    productPage: async ({ page }, use, testInfo) => {
+
         const productPage = new ProductPage(page);
-        
+
         await productPage.navigate(environment.baseUrl);
 
         await productPage.waitForProducts();
@@ -15,7 +49,7 @@ exports.test = base.test.extend({
         await use(productPage);
 
     },
-
+    
     cartPage: async ({ page }, use) => {
 
         const cartPage = new CartPage(page);
