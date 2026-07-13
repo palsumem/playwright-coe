@@ -2,58 +2,54 @@ const { test, expect } = require('../fixtures/testFixtures');
 
 const Logger = require('../utils/logger');
 
-const environment = require('../config/environment');
-
 const cartData = require('../data/cartData');
 
-test('@smoke @regression @cart Verify adding products by price and validating cart details', async ({ productPage, cartPage }) => {
-    let selectedProducts;
+test.describe('Shopping Cart Tests', () => {
+    test('@smoke @regression @cart Verify adding products by price and validating cart details', async ({ productPage, cartPage }) => {
+        let selectedProducts;
+        
+        await test.step('Shopping Cart application is ready...', async () => {
 
-    await test.step('Launch Shopping Cart Application',async () => {
+            Logger.info('Shopping Cart application is ready...');
 
-        await productPage.navigate(environment.baseUrl);
+        });
 
-        await productPage.waitForProducts();
+        await test.step('Add Products To Cart', async () => {
 
-        Logger.info('Launching Shopping Cart application...');
+            selectedProducts = await productPage.addProductsByPrice(cartData.productPrices);
 
-    });
+            Logger.success(`${selectedProducts.length} products added to cart.`);
 
-    await test.step('Add Products To Cart',async () => {
+        });
 
-        selectedProducts = await productPage.addProductsByPrice(cartData.productPrices);
+        await test.step(
+            'Open Shopping Cart', async () => {
 
-        Logger.success(`${selectedProducts.length} products added to cart.`);
+                await cartPage.openCart();
 
-    });
-    
-    await test.step(
-    'Open Shopping Cart',async () => {
+            });
 
-        await cartPage.openCart();
+        await test.step('Validate Cart Products', async () => {
 
-    });
+            Logger.info('Starting cart validation...');
 
-    await test.step('Validate Cart Products',async () => {
+            await cartPage.validateProducts(selectedProducts);
 
-        Logger.info('Starting cart validation...');
+        });
 
-        await cartPage.validateProducts(selectedProducts);
+        await test.step('Validate Total Quantity', async () => {
 
-    });
+            await cartPage.validateTotalQuantity(selectedProducts);
 
-    await test.step('Validate Total Quantity',async () => {
+        });
 
-        await cartPage.validateTotalQuantity(selectedProducts);
 
-    });
+        await test.step('Validate Grand Total', async () => {
 
-    
-    await test.step('Validate Grand Total',async () => {
+            await cartPage.validateGrandTotal(selectedProducts);
 
-        await cartPage.validateGrandTotal(selectedProducts);
+            Logger.success('Cart validation completed successfully.');
 
-        Logger.success('Cart validation completed successfully.');
-
+        });
     });
 });
