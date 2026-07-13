@@ -6,7 +6,7 @@ const environment = require('../config/environment');
 
 const cartData = require('../data/cartData');
 
-test('Verify adding products by price and validating cart details', async ({ productPage, cartPage }) => {
+test('@smoke @regression @cart Verify adding products by price and validating cart details', async ({ productPage, cartPage }) => {
     let selectedProducts;
 
     await test.step('Launch Shopping Cart Application',async () => {
