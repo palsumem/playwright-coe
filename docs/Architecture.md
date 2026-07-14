@@ -88,32 +88,17 @@ The following sections describe each architectural layer and its responsibility 
 
 The framework has been organized into multiple logical layers, each responsible for a specific aspect of automation execution.
 
-| Layer                     | Responsibility                              |
-|---------------------------|---------------------------------------------|
-| Application Layer         | React Shopping Cart application under test  |
-|-------------------------------------------------------------------------|
-| Browser Layer             | Browser instances managed by Playwright     |
-|-------------------------------------------------------------------------|
-| Automation Layer          | Playwright runtime responsible for browser  | 
-|                           |automation, synchronization, assertions,     | 
-|                           |and execution control.                       |
-|-------------------------------------------------------------------------|
-| Framework Core            | Base Page centralizing common browser       |
-|                           |interactions shared across all page objects. |
-|-------------------------------------------------------------------------|
-| Page Object Layer         | Encapsulates application-specific           |
-|                           |interactions through ProductPage and         |
-|                           | CartPage                                    |
-|-------------------------------------------------------------------------|
-| Test Layer                | Business scenarios implemented using        |
-|                           | Playwright tests                            |
-|-------------------------------------------------------------------------|
-| Fixture & Service Layer   | Dependency injection, lifecycle management, |
-|                           | execution metadata                          |
-|-------------------------------------------------------------------------|
-| Supporting Components     | Configuration, test data, locators,         |
-|                           | utilities, logging, and reporting           |
-|-------------------------------------------------------------------------|
+| Layer | Responsibility |
+|-------|----------------|
+| Application Layer | React Shopping Cart application under test |
+| Browser Layer | Browser instances managed by Playwright |
+| Automation Layer | Playwright runtime responsible for browser automation, synchronization assertions, and execution control. |
+| Framework Core | Base Page centralizing common browser interactions shared across all page objects. |
+| Page Object Layer | Encapsulates application-specific interactions through ProductPage and CartPage |
+| Test Layer | Business scenarios implemented using Playwright tests |
+| Fixture & Service Layer | Dependency injection, lifecycle management,execution metadata |
+
+| Supporting Components | Configuration, test data, locators, utilities, logging, and reporting |
 
 ---
 
@@ -121,33 +106,18 @@ The framework has been organized into multiple logical layers, each responsible 
 
 The framework follows a modular folder structure where each folder represents a distinct responsibility.
 
-| Folder                | Purpose                    |
-|-----------------------|----------------------------|
-| config                | Environment configuration  | 
-|                       | management                 |
-|----------------------------------------------------|
-| data                  | Externalized test data     |
-|----------------------------------------------------|
-| docs                  | Framework documentation    |
-|----------------------------------------------------|
-| fixtures              | Shared setup and           |
-|                       | dependency injection       |
-|----------------------------------------------------|
-| locators              | Centralized UI locator     |
-|                       | repository                 |
-|----------------------------------------------------|
-| pages                 | Page Object implementations|
-|----------------------------------------------------|
-| services              | Business services and      | 
-|                       | lifecycle management       |
-|----------------------------------------------------|
-| tests                 | Business test scenarios    |
-|----------------------------------------------------|
-| utils                 | Reusable helper utilities  |
-|----------------------------------------------------|
-| .github               | Continuous Integration     |
-|                       | workflow                   |
-|----------------------------------------------------|
+| Folder | Purpose |
+|--------|---------|
+| config | Environment configuration management |
+| data | Externalized test data |
+| docs | Framework documentation |
+| fixtures | Shared setup and dependency injection |
+| locators | Centralized UI locator repository |
+| pages | Page Object implementations|
+| services | Business services and lifecycle management |
+| tests | Business test scenarios |
+| utils | Reusable helper utilities |
+| .github | Continuous Integration workflow |
 
 ---
 
@@ -155,24 +125,13 @@ The framework follows a modular folder structure where each folder represents a 
 
 The framework applies multiple software design patterns to improve maintainability and scalability.
 
-| Pattern                   | Implementation                   | Purpose              |
-|---------------------------|----------------------------------|----------------------|
-| Page Object Model         | ProductPage, CartPage            | Encapsulates page    |
-|                           |                                  | behaviour            |
-|-------------------------------------------------------------------------------------|
-| Base Class Pattern        | BasePage                         | Centralizes common   |
-|                           |                                  |browser actions       |
-|-------------------------------------------------------------------------------------|
-| Dependency Injection      | Playwright Fixtures              | Removes duplicated   |
-|                           |                                  | initialization code  |
-|-------------------------------------------------------------------------------------|
-| Locator Repository Pattern| Locator Repository               | Centralizes          |
-|                           |                                  | application locators |
-|-------------------------------------------------------------------------------------|
-| Service Layer             | Lifecycle Service                | Encapsulates         | 
-|                           |                                  | execution metadata   |
-|                           |                                  | generation           |
-|-------------------------------------------------------------------------------------|
+| Pattern | Implementation | Purpose |
+|---------|----------------|---------|
+| Page Object Model | ProductPage, CartPage | Encapsulates page behaviour |
+| Base Class Pattern | BasePage | Centralizes common browser actions |
+| Dependency Injection | Playwright Fixtures | Removes duplicated initialization code |
+| Locator Repository Pattern | Locator Repository | Centralizes application locators |
+| Service Layer | Lifecycle Service | Encapsulates execution metadata generation |
 
 ---
 
@@ -229,29 +188,15 @@ Potential expansion areas include:
 
 The following architectural decisions were intentionally made during framework development.
 
-| Decision                          | Reason                            |
-|-----------------------------------|-----------------------------------|
-| Externalized Configuration        | Supports multiple execution       | 
-|                                   | environments                      |
-|-----------------------------------------------------------------------|
-| Externalized Test Data            | Simplifies test maintenance       |
-|-----------------------------------------------------------------------|
-| Locator Repository                | Centralizes UI selectors          |
-|-----------------------------------------------------------------------|
-| Base Page                         | Eliminates duplicated browser     | 
-|                                   | actions                           |
-|-----------------------------------------------------------------------|
-| Playwright Fixtures               | Provides dependency injection and |
-|                                   | shared setup                      |
-|-----------------------------------------------------------------------|
-| Lifecycle Service                 | Separates execution metadata from | 
-|                                   | business logic                    |
-|-----------------------------------------------------------------------|
-| Business Logger                   | Improves execution readability    |
-|-----------------------------------------------------------------------|
-| Layered Architecture              | Encourages modularity and         |
-|                                   | scalability                       |
-|-----------------------------------------------------------------------|
+| Decision | Reason |
+| Externalized Configuration | Supports multiple execution environments |
+| Externalized Test Data | Simplifies test maintenance |
+| Locator Repository | Centralizes UI selectors |
+| Base Page | Eliminates duplicated browser actions |
+| Playwright Fixtures | Provides dependency injection and shared setup |
+| Lifecycle Service | Separates execution metadata from business logic |
+| Business Logger | Improves execution readability |
+| Layered Architecture | Encourages modularity and scalability |
 
 ---
 
